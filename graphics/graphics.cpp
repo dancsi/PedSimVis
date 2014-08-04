@@ -37,6 +37,23 @@ namespace graphics
 		glfwGetCursorPos(window, &pos.x, &pos.y);
 		vec_t world_pos = screen2world({ pos.x, pos.y });
 		world_pos = { round(world_pos.x), round(world_pos.y) };
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		{
+			world_pos.x -= 0.01;
+		}
+		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		{
+			world_pos.x += 0.01;
+		}
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		{
+			world_pos.y -= 0.01;
+		}
+		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		{
+			world_pos.y += 0.01;
+		}
+
 		if (action == GLFW_RELEASE)
 		{
 			if (drawing)
