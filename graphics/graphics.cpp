@@ -39,19 +39,19 @@ namespace graphics
 		world_pos = { round(world_pos.x), round(world_pos.y) };
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		{
-			world_pos.x -= 0.01;
+			world_pos.x -= 0.1;
 		}
 		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		{
-			world_pos.x += 0.01;
+			world_pos.x += 0.1;
 		}
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		{
-			world_pos.y -= 0.01;
+			world_pos.y -= 0.1;
 		}
 		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 		{
-			world_pos.y += 0.01;
+			world_pos.y += 0.1;
 		}
 
 		if (action == GLFW_RELEASE)
