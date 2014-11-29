@@ -112,6 +112,10 @@ namespace graphics
 			NVG_NOTUSED(mods);
 			if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 				glfwSetWindowShouldClose(window, GL_TRUE);
+			if (key == GLFW_KEY_S && action == GLFW_RELEASE)
+			{
+				save_svg();
+			}
 		});
 
 		glfwSetMouseButtonCallback(window, mouse_callback);
@@ -136,6 +140,27 @@ namespace graphics
 		initGPUTimer(&gpu_timer);
 		glfwSetTime(0);
 		prev_time = glfwGetTime();
+	}
+
+	void save_svg()
+	{
+		FILE* fout = fopen("screenshot.svg", "w");
+		fprintf(fout, "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">\n<g transform=\"scale(4)\">\n");
+		fprintf(fout, "<rect x=\"0\" y=\"0\" width=\"%d\" height=\"%d\" fill=\"rgb(30%, 30%, 32%)\" />\n", world::width, world::height);
+		for (int i = 0; i < n; i++)
+		{
+			for (int j = 0; j < m; j++)
+			{
+				fprintf(fout, "<circle cx=\"%.2f\" cy=\"%.2f\" r=\"0.2\" fill=\"black\" />\n", j*world::spacing, i*world::spacing);
+			}
+		}
+		for (line_t wall : world::walls)
+		{
+			fprintf(fout, "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"blue\" stroke-width=\".1\" stroke-linecap=\"square\" />\n", wall.p.x, wall.p.y, wall.q.x, wall.q.y, 3*graphics::one_pixel);
+		}
+		fprintf(fout, "</g></svg>");
+		fclose(fout);
+		fprintf(stderr, "SVG saved.\n");
 	}
 
 	bool should_exit()
@@ -164,8 +189,8 @@ namespace graphics
 	void end_frame()
 	{
 		draw_ui_scale();
-		renderGraph(vg, 5, 5, &fps_graph);
-		renderGraph(vg, 5 + 200 + 5, 5, &cpu_graph);
+		//renderGraph(vg, 5, 5, &fps_graph);
+		//renderGraph(vg, 5 + 200 + 5, 5, &cpu_graph);
 		if (gpu_timer.supported)
 			renderGraph(vg, 5 + 200 + 5 + 200 + 5, 5, &gpu_graph);
 		draw_world_scale();
